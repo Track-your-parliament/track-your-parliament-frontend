@@ -1,5 +1,5 @@
 import React from 'react'
-import data from './proposals_keywords_distributions.json'
+import data from './data.json'
 import Timeline from './Timeline.js'
 
 const App = () => {
