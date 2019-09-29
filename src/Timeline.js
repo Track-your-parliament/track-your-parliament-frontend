@@ -33,7 +33,7 @@ const Timeline = ({ data }) => {
     <div>
       <VerticalTimeline
         animate={true}
-        layout="2-columns"
+        layout="1-column"
         className="custom-vertical-timeline"
       >
         {data
@@ -47,8 +47,11 @@ const Timeline = ({ data }) => {
               contentArrowStyle={styles.default.arrow}
               iconStyle={styles.default.icon}
               position="right"
-              date={DateTime.fromSQL(item.created).toFormat('dd.LL.y T')}
             >
+              <h3 className="vertical-timeline-element-title">
+                {DateTime.fromSQL(item.created).toFormat('dd.LL.y T')}
+              </h3>
+
               {item.keywords
                 .sort((a, b) => b.tfidf - a.tfidf)
                 .map(keyword => (
@@ -58,10 +61,10 @@ const Timeline = ({ data }) => {
                     size={keyword.tfidf}
                   />
                 ))}
+              <br />
             </VerticalTimelineElement>
           ))}
       </VerticalTimeline>
-      s
     </div>
   )
 }

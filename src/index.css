@@ -1,21 +1,10 @@
 body {
   margin: 0;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #ffffff;
-}
-.tag {
-  display: inline-block;
-  background: #e0e0e0;
-  color: rgba(0, 0, 0, 0.87);
-  padding-top: 5px;
-  padding-bottom: 5px;
-  margin-right: 10px !important;
-  margin-bottom: 10px !important;
-  margin-top: 0 !important;
-  margin-left: 0 !important;
 }
 
 .custom-vertical-timeline-element {
@@ -26,5 +15,8 @@ body {
   background: black !important;
 }
 .vertical-timeline-element-date {
+  color: rgba(0, 0, 0, 0.87);
+}
+.vertical-timeline-element-title {
   color: rgba(0, 0, 0, 0.87);
 }
