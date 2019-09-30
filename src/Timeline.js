@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
+import shortid from 'shortid'
 import {
   VerticalTimeline,
   VerticalTimelineElement,
@@ -7,6 +8,28 @@ import {
 import { DateTime } from 'luxon'
 import 'react-vertical-timeline-component/style.min.css'
 import Tag from './Tag.js'
+import data from './data.json'
+import {
+  sortByDate,
+  aggregateByDay,
+  aggregateByMonth,
+  aggregateByYear,
+} from './dataUtils'
+
+const getData = dataType => {
+  switch (dataType) {
+    case 'document':
+      return sortByDate(data)
+    case 'day':
+      return aggregateByDay(data)
+    case 'month':
+      return aggregateByMonth(data)
+    case 'year':
+      return aggregateByYear(data)
+    default:
+      break
+  }
+}
 
 const styles = {
   default: {
@@ -28,7 +51,9 @@ const styles = {
   },
 }
 
-const Timeline = ({ data }) => {
+const Timeline = ({ dataType, aggregated, timeFormat }) => {
+  const data = useMemo(() => getData(dataType), [dataType])
+
   return (
     <div>
       <VerticalTimeline
@@ -36,34 +61,33 @@ const Timeline = ({ data }) => {
         layout="1-column"
         className="custom-vertical-timeline"
       >
-        {data
-          .sort((a, b) =>
-            DateTime.fromSQL(a.created) > DateTime.fromSQL(b.created) ? -1 : 1
-          )
-          .map(item => (
-            <VerticalTimelineElement
-              className=""
-              contentStyle={styles.default.content}
-              contentArrowStyle={styles.default.arrow}
-              iconStyle={styles.default.icon}
-              position="right"
-            >
-              <h3 className="vertical-timeline-element-title">
-                {DateTime.fromSQL(item.created).toFormat('dd.LL.y T')}
-              </h3>
+        {data.map(item => (
+          <VerticalTimelineElement
+            key={item.id}
+            className="custom-vertical-timeline-element"
+            contentStyle={styles.default.content}
+            contentArrowStyle={styles.default.arrow}
+            iconStyle={styles.default.icon}
+            position="right"
+          >
+            <h3 className="vertical-timeline-element-title">
+              {aggregated
+                ? DateTime.fromISO(item.created).toFormat(timeFormat)
+                : DateTime.fromSQL(item.created).toFormat(timeFormat)}
+            </h3>
 
-              {item.keywords
-                .sort((a, b) => b.tfidf - a.tfidf)
-                .map(keyword => (
-                  <Tag
-                    key={item.id + '' + keyword.word}
-                    text={keyword.word}
-                    size={keyword.tfidf}
-                  />
-                ))}
-              <br />
-            </VerticalTimelineElement>
-          ))}
+            {item.keywords
+              .sort((a, b) => b.tfidf - a.tfidf)
+              .map(keyword => (
+                <Tag
+                  key={item.id + '_tag_' + shortid.generate()}
+                  text={keyword.word}
+                  size={keyword.tfidf}
+                />
+              ))}
+            <br />
+          </VerticalTimelineElement>
+        ))}
       </VerticalTimeline>
     </div>
   )

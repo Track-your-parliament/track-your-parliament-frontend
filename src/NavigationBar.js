@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import BottomNavigation from '@material-ui/core/BottomNavigation'
@@ -15,25 +16,63 @@ const useStyles = makeStyles({
   },
 })
 
-const NavigationBar = props => {
+const getButtonIndexFromLocation = location => {
+  switch (location) {
+    case '/day':
+      return 0
+    case '/month':
+      return 1
+    case '/year':
+      return 2
+    case '/document':
+      return 3
+    default:
+      return 0
+  }
+}
+
+const NavigationBar = ({ showLoading, setShowLoading }) => {
   const classes = useStyles()
-  const [value, setValue] = useState(0)
+  const location = useLocation()
+  const [value, setValue] = useState(
+    getButtonIndexFromLocation(location.pathname)
+  )
+
   return (
     <Paper className={classes.root} elevation={8}>
       <BottomNavigation
         value={value}
         onChange={(event, newValue) => {
+          setShowLoading(true)
+          setTimeout(() => setShowLoading(false), 1000)
           setValue(newValue)
         }}
         showLabels
       >
         <BottomNavigationAction
+          label="Per day"
+          icon={<DateRangeIcon />}
+          component={Link}
+          to="/day"
+        />
+        <BottomNavigationAction
+          label="Per month"
+          icon={<DateRangeIcon />}
+          component={Link}
+          to="/month"
+        />
+        <BottomNavigationAction
+          label="Per year"
+          icon={<DateRangeIcon />}
+          component={Link}
+          to="/year"
+        />
+        <BottomNavigationAction
           label="Per document"
           icon={<DescriptionIcon />}
+          component={Link}
+          to="/document"
         />
-        <BottomNavigationAction label="Per day" icon={<DateRangeIcon />} />
-        <BottomNavigationAction label="Per month" icon={<DateRangeIcon />} />
-        <BottomNavigationAction label="Per year" icon={<DateRangeIcon />} />
       </BottomNavigation>
     </Paper>
   )
