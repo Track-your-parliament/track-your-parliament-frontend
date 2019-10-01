@@ -18,11 +18,11 @@ const useStyles = makeStyles({
 
 const getButtonIndexFromLocation = location => {
   switch (location) {
-    case '/day':
+    case '/year':
       return 0
     case '/month':
       return 1
-    case '/year':
+    case '/day':
       return 2
     case '/document':
       return 3
@@ -54,10 +54,10 @@ const NavigationBar = ({ showLoading, setShowLoading }) => {
         showLabels
       >
         <BottomNavigationAction
-          label="Per day"
+          label="Per year"
           icon={<DateRangeIcon />}
           component={Link}
-          to="/day"
+          to="/year"
         />
         <BottomNavigationAction
           label="Per month"
@@ -66,10 +66,10 @@ const NavigationBar = ({ showLoading, setShowLoading }) => {
           to="/month"
         />
         <BottomNavigationAction
-          label="Per year"
+          label="Per day"
           icon={<DateRangeIcon />}
           component={Link}
-          to="/year"
+          to="/day"
         />
         <BottomNavigationAction
           label="Per document"
