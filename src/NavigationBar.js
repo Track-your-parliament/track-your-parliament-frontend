@@ -24,7 +24,7 @@ const getButtonIndexFromLocation = location => {
       return 1
     case '/day':
       return 2
-    case '/document':
+    case '/vote':
       return 3
     default:
       return 0
@@ -47,8 +47,6 @@ const NavigationBar = ({ showLoading, setShowLoading }) => {
       <BottomNavigation
         value={value}
         onChange={(event, newValue) => {
-          setShowLoading(true)
-          setTimeout(() => setShowLoading(false), 1000)
           setValue(newValue)
         }}
         showLabels
@@ -72,10 +70,10 @@ const NavigationBar = ({ showLoading, setShowLoading }) => {
           to="/day"
         />
         <BottomNavigationAction
-          label="Per document"
+          label="Per vote"
           icon={<DescriptionIcon />}
           component={Link}
-          to="/document"
+          to="/vote"
         />
       </BottomNavigation>
     </Paper>

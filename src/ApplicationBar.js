@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { fade, makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import SearchIcon from '@material-ui/icons/Search'
 import { InputBase } from '@material-ui/core'
+import { useLocation, useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -53,8 +54,17 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const ApplicationBar = ({ searchFilter }) => {
+const ApplicationBar = props => {
   const classes = useStyles()
+  const history = useHistory()
+  const location = useLocation()
+  const [searchFilter, setSearchFilter] = useState('')
+
+  const handleSearchChange = e => setSearchFilter(e.target.value)
+
+  const handleSearchSubmit = e => {
+    history.push('/vote?search=' + searchFilter)
+  }
 
   return (
     <React.Fragment>
@@ -65,7 +75,7 @@ const ApplicationBar = ({ searchFilter }) => {
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
-              <SearchIcon />
+              <SearchIcon onClick={handleSearchSubmit} />
             </div>
             <InputBase
               placeholder="Search…"
@@ -74,7 +84,12 @@ const ApplicationBar = ({ searchFilter }) => {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
-              onChange={searchFilter}
+              onChange={handleSearchChange}
+              onKeyDown={e => {
+                if (e.keyCode === 13) {
+                  handleSearchSubmit(e)
+                }
+              }}
             />
           </div>
         </Toolbar>
