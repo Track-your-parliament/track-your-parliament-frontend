@@ -4,7 +4,7 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import SearchIcon from '@material-ui/icons/Search'
-import { InputBase } from '@material-ui/core'
+import { InputBase, Button } from '@material-ui/core'
 import { useLocation, useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
@@ -63,7 +63,9 @@ const ApplicationBar = props => {
   const handleSearchChange = e => setSearchFilter(e.target.value)
 
   const handleSearchSubmit = e => {
-    history.push('/vote?search=' + searchFilter)
+    if (searchFilter.length >= 2) {
+      history.push('/vote?search=' + searchFilter)
+    }
   }
 
   return (
@@ -92,6 +94,14 @@ const ApplicationBar = props => {
               }}
             />
           </div>
+          <Button
+            variant="outlined"
+            color="secondary"
+            disabled={searchFilter.length < 2}
+            onClick={handleSearchSubmit}
+          >
+            Search
+          </Button>
         </Toolbar>
       </AppBar>
       <Toolbar />

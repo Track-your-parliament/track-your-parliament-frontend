@@ -110,6 +110,7 @@ const PerVoteTimeline = ({ searchFilter }) => {
             </h3>
 
             <h4 className={classes.title}> {item.title})</h4>
+            <p className={classes.content}>{item.summary}</p>
 
             {item.keywords_list.map((keyword, i) => (
               <Tag
