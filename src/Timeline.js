@@ -53,7 +53,13 @@ const getData = dataType => {
   }
 }
 
-const filterData = (data, dataType, queryParams) => {
+const filterDataWithUrl = (data, dataType, queryParams, filter) => {
+  console.log(data)
+  let newData = data
+  if (!filter) {
+    newData = filterDataWithFilter(data, filter)
+  }
+  console.log(newData)
   const yearParam = queryParams.get('year')
   const monthParam = queryParams.get('month')
   const dayParam = queryParams.get('day')
@@ -65,32 +71,41 @@ const filterData = (data, dataType, queryParams) => {
   const document = documentParam !== null ? documentParam : null
 
   if (dataType === 'document' && document) {
-    return data.filter(item => item.id === document)
+    return newData.filter(item => item.id === document)
   } else if (dataType === 'document' && day) {
-    return data.filter(
+    return newData.filter(
       item => DateTime.fromSQL(item.created).toISODate() === day
     )
   } else if (dataType === 'day' && year && month) {
-    return data.filter(
+    return newData.filter(
       item =>
         DateTime.fromISO(item.created).month === month &&
         DateTime.fromISO(item.created).year === year
     )
   } else if (dataType === 'month' && year) {
-    return data.filter(item => DateTime.fromISO(item.created).year === year)
+    return newData.filter(item => DateTime.fromISO(item.created).year === year)
   } else {
-    return data
+    return newData
   }
 }
 
-const Timeline = ({ dataType, aggregated, timeFormat, setShowLoading }) => {
+const filterDataWithFilter = (data, filter) => {
+  return data.filter(item => {
+    item.keywords.forEach((obj) => {
+      if (obj.word.includes(filter)) {
+        return false
+      }
+    })
+    return true
+  })
+}
+
+const Timeline = ({ dataType, aggregated, timeFormat, setShowLoading, filter }) => {
   const history = useHistory()
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
   const data = useMemo(
-    () => filterData(getData(dataType), dataType, queryParams),
-    [dataType, queryParams]
-  )
+    () => filterDataWithUrl(getData(dataType), dataType, queryParams), [dataType, queryParams], filter)
 
   const redirectToView = date => {
     setShowLoading(true)
