@@ -7,11 +7,17 @@ import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 
 const App = () => {
   const [showLoading, setShowLoading] = useState(false)
+  const [filter, setFilter] = useState('')
+
+  const searchFilter = (event) => {
+    event.preventDefault()
+    setFilter(event.target.value)
+  }
 
   return (
     <div className="App">
       <Router>
-        <ApplicationBar />
+        <ApplicationBar searchFilter={searchFilter} />
         {showLoading && (
           <CircularProgress
             disableShrink
@@ -42,6 +48,7 @@ const App = () => {
                   aggregated
                   showLoading={showLoading}
                   setShowLoading={setShowLoading}
+                  filter={filter}
                 />
               )}
             />
@@ -55,6 +62,7 @@ const App = () => {
                   aggregated
                   showLoading={showLoading}
                   setShowLoading={setShowLoading}
+                  filter={filter}
                 />
               )}
             />
@@ -68,6 +76,7 @@ const App = () => {
                   aggregated
                   showLoading={showLoading}
                   setShowLoading={setShowLoading}
+                  filter={filter}
                 />
               )}
             />
@@ -81,6 +90,7 @@ const App = () => {
                   aggregated={false}
                   showLoading={showLoading}
                   setShowLoading={setShowLoading}
+                  filter={filter}
                 />
               )}
             />

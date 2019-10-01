@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const ApplicationBar = () => {
+const ApplicationBar = ({ searchFilter }) => {
   const classes = useStyles()
 
   return (
@@ -74,6 +74,7 @@ const ApplicationBar = () => {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              onChange={searchFilter}
             />
           </div>
         </Toolbar>
