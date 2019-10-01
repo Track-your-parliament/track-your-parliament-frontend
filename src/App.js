@@ -30,7 +30,7 @@ const App = () => {
             <Route
               exact
               path="/"
-              render={props => <Redirect {...props} to="/day" />}
+              render={props => <Redirect {...props} to="/year" />}
             />
             <Route
               path="/day"
