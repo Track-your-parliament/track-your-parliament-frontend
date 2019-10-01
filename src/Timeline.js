@@ -127,43 +127,41 @@ const Timeline = ({ dataType, aggregated, timeFormat, setShowLoading, filter }) 
   }
 
   return (
-    <div>
-      <VerticalTimeline
-        animate={true}
-        layout="1-column"
-        className="custom-vertical-timeline"
-      >
-        {data.map(item => (
-          <VerticalTimelineElement
-            key={item.id}
-            className="custom-vertical-timeline-element"
-            contentStyle={styles.default.content}
-            contentArrowStyle={styles.default.arrow}
-            iconStyle={styles.default.icon}
-            iconOnClick={() => redirectToView(item.created)}
-            position="right"
-          >
-            <h3 className="vertical-timeline-element-title">
-              {aggregated
-                ? DateTime.fromISO(item.created).toFormat(timeFormat)
-                : DateTime.fromSQL(item.created).toFormat(timeFormat)}
-            </h3>
+    <VerticalTimeline
+      animate={true}
+      layout="1-column"
+      className="custom-vertical-timeline"
+    >
+      {data.map(item => (
+        <VerticalTimelineElement
+          key={item.id}
+          className="custom-vertical-timeline-element"
+          contentStyle={styles.default.content}
+          contentArrowStyle={styles.default.arrow}
+          iconStyle={styles.default.icon}
+          iconOnClick={() => redirectToView(item.created)}
+          position="right"
+        >
+          <h3 className="vertical-timeline-element-title">
+            {aggregated
+              ? DateTime.fromISO(item.created).toFormat(timeFormat)
+              : DateTime.fromSQL(item.created).toFormat(timeFormat)}
+          </h3>
 
-            {item.keywords
-              .sort((a, b) => b.tfidf - a.tfidf)
-              .slice(0, 20)
-              .map(keyword => (
-                <Tag
-                  key={item.id + '_tag_' + shortid.generate()}
-                  text={keyword.word}
-                  size={keyword.tfidf}
-                />
-              ))}
-            <br />
-          </VerticalTimelineElement>
-        ))}
-      </VerticalTimeline>
-    </div>
+          {item.keywords
+            .sort((a, b) => b.tfidf - a.tfidf)
+            .slice(0, 20)
+            .map(keyword => (
+              <Tag
+                key={item.id + '_tag_' + shortid.generate()}
+                text={keyword.word}
+                size={keyword.tfidf}
+              />
+            ))}
+          <br />
+        </VerticalTimelineElement>
+      ))}
+    </VerticalTimeline>
   )
 }
 

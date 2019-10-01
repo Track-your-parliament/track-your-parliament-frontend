@@ -10,6 +10,9 @@ body {
 .custom-vertical-timeline-element {
   padding: 0;
 }
+.custom-vertical-timeline {
+  min-height: 100%;
+}
 
 .custom-vertical-timeline:before {
   background: black !important;

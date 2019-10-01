@@ -2,20 +2,36 @@ import React, { useState } from 'react'
 import Timeline from './Timeline.js'
 import ApplicationBar from './ApplicationBar'
 import { Container, CircularProgress } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
 import NavigationBar from './NavigationBar.js'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
+import { height } from '@material-ui/system'
+
+const useStyles = makeStyles({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100vh',
+    overflow: 'hidden',
+  },
+  container: {
+    overflowY: 'auto',
+    minHeight: '100%',
+  },
+})
 
 const App = () => {
   const [showLoading, setShowLoading] = useState(false)
   const [filter, setFilter] = useState('')
+  const classes = useStyles()
 
-  const searchFilter = (event) => {
+  const searchFilter = event => {
     event.preventDefault()
     setFilter(event.target.value)
   }
 
   return (
-    <div className="App">
+    <div className={classes.root}>
       <Router>
         <ApplicationBar searchFilter={searchFilter} />
         {showLoading && (
@@ -32,7 +48,7 @@ const App = () => {
           />
         )}
         {!showLoading && (
-          <Container>
+          <Container className={classes.container}>
             <Route
               exact
               path="/"
