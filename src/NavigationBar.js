@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
@@ -37,6 +37,10 @@ const NavigationBar = ({ showLoading, setShowLoading }) => {
   const [value, setValue] = useState(
     getButtonIndexFromLocation(location.pathname)
   )
+
+  useEffect(() => {
+    setValue(getButtonIndexFromLocation(location.pathname))
+  }, [location.pathname])
 
   return (
     <Paper className={classes.root} elevation={8}>

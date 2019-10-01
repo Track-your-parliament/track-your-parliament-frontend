@@ -40,6 +40,8 @@ const App = () => {
                   dataType="day"
                   timeFormat="DDD"
                   aggregated
+                  showLoading={showLoading}
+                  setShowLoading={setShowLoading}
                 />
               )}
             />
@@ -51,6 +53,8 @@ const App = () => {
                   dataType="month"
                   timeFormat="LLLL y"
                   aggregated
+                  showLoading={showLoading}
+                  setShowLoading={setShowLoading}
                 />
               )}
             />
@@ -62,6 +66,8 @@ const App = () => {
                   dataType="year"
                   timeFormat="y"
                   aggregated
+                  showLoading={showLoading}
+                  setShowLoading={setShowLoading}
                 />
               )}
             />
@@ -73,6 +79,8 @@ const App = () => {
                   dataType="document"
                   timeFormat="DDD T"
                   aggregated={false}
+                  showLoading={showLoading}
+                  setShowLoading={setShowLoading}
                 />
               )}
             />
