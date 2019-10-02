@@ -17,11 +17,8 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     height: '100vh',
-    overflow: 'hidden',
   },
   container: {
-    overflowY: 'auto',
-    overflowX: 'hidden',
     flexGrow: 1,
   },
   progress: {

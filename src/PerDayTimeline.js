@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useHistory, useLocation } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
@@ -11,6 +11,7 @@ import shortid from 'shortid'
 import { DateTime } from 'luxon'
 import Tag from './Tag'
 import initialData from './data/top_keywords_by_day.json'
+import PaginationControllers, { paginate } from './PaginationControllers'
 
 const useStyles = makeStyles(theme => {
   return {
@@ -52,6 +53,8 @@ const PerDayTimeline = params => {
   const data = useMemo(() => filterDataWithUrl(initialData, queryParams), [
     queryParams,
   ])
+  const [page, setPage] = useState(0)
+  const [perPage, setPerPage] = useState(10)
 
   const iconClickHandler = date => {
     history.push('/vote?date=' + date)
@@ -63,7 +66,7 @@ const PerDayTimeline = params => {
       layout="1-column"
       className={classes.timeline}
     >
-      {data.map(item => (
+      {paginate(data, page, perPage).map(item => (
         <VerticalTimelineElement
           key={DateTime.fromSQL(item.date).toISODate()}
           className={classes.timelineElement}
@@ -93,6 +96,12 @@ const PerDayTimeline = params => {
           <br />
         </VerticalTimelineElement>
       ))}
+      <PaginationControllers
+        page={page}
+        setPage={setPage}
+        perPage={perPage}
+        dataSize={data.length}
+      />
     </VerticalTimeline>
   )
 }

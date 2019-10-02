@@ -58,13 +58,17 @@ const ApplicationBar = props => {
   const classes = useStyles()
   const history = useHistory()
   const location = useLocation()
-  const [searchFilter, setSearchFilter] = useState('')
+  const queryParams = new URLSearchParams(location.search)
+  const [searchFilter, setSearchFilter] = useState(
+    queryParams.get('search') || ''
+  )
 
   const handleSearchChange = e => setSearchFilter(e.target.value)
 
   const handleSearchSubmit = e => {
     if (searchFilter.length >= 2) {
       history.push('/vote?search=' + searchFilter)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }
 
@@ -85,6 +89,7 @@ const ApplicationBar = props => {
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
+              value={searchFilter}
               inputProps={{ 'aria-label': 'search' }}
               onChange={handleSearchChange}
               onKeyDown={e => {

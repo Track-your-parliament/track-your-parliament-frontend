@@ -47,6 +47,7 @@ const NavigationBar = ({ showLoading, setShowLoading }) => {
       <BottomNavigation
         value={value}
         onChange={(event, newValue) => {
+          window.scrollTo({ top: 0, behavior: 'smooth' })
           setValue(newValue)
         }}
         showLabels

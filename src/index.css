@@ -6,19 +6,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.custom-vertical-timeline-element {
-  padding: 0;
-}
-.custom-vertical-timeline {
-  min-height: 100%;
-}
-
-.custom-vertical-timeline:before {
-  background: black !important;
-}
-.vertical-timeline-element-date {
-  color: rgba(0, 0, 0, 0.87);
-}
-.vertical-timeline-element-title {
-  color: rgba(0, 0, 0, 0.87);
+.vertical-timeline-element-content h2 {
+  font-size: inherit !important;
 }
