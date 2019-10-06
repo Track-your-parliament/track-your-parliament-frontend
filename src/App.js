@@ -3,12 +3,7 @@ import ApplicationBar from './ApplicationBar'
 import { Container, CircularProgress, Toolbar } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import NavigationBar from './NavigationBar.js'
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-  Switch,
-} from 'react-router-dom'
+import { HashRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
 
 import 'react-vertical-timeline-component/style.min.css'
 
