@@ -34,7 +34,6 @@ const useStyles = makeStyles({
 const PerDayTimeline = lazy(() => import('./PerDayTimeline'))
 const PerMonthTimeline = lazy(() => import('./PerMonthTimeline'))
 const PerYearTimeline = lazy(() => import('./PerYearTimeline'))
-const PerDocumentTimeline = lazy(() => import('./PerDocumentTimeline'))
 const PerVoteTimeline = lazy(() => import('./PerVoteTimeline'))
 
 const App = () => {

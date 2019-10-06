@@ -1,5 +1,4 @@
 import React, { useMemo, useState } from 'react'
-import PropTypes from 'prop-types'
 import { useHistory, useLocation } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import {
@@ -54,7 +53,7 @@ const PerDayTimeline = params => {
     queryParams,
   ])
   const [page, setPage] = useState(0)
-  const [perPage, setPerPage] = useState(10)
+  const [perPage] = useState(10)
 
   const iconClickHandler = date => {
     history.push('/vote?date=' + date)
