@@ -11,6 +11,7 @@
     "react-router-dom": "^5.1.1",
     "react-scripts": "3.1.2",
     "react-vertical-timeline-component": "^2.5.0",
+    "react-vis": "^1.11.7",
     "shortid": "^2.2.15"
   },
   "scripts": {

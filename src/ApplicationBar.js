@@ -16,6 +16,7 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1,
+    cursor: 'pointer',
   },
   search: {
     position: 'relative',
@@ -72,11 +73,20 @@ const ApplicationBar = props => {
     }
   }
 
+  const handleLogoClick = e => {
+    history.push('/year' + searchFilter)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   return (
     <React.Fragment>
       <AppBar>
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
+          <Typography
+            variant="h6"
+            className={classes.title}
+            onClick={handleLogoClick}
+          >
             Track-your-parliament
           </Typography>
           <div className={classes.search}>

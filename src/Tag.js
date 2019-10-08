@@ -1,5 +1,6 @@
 import React from 'react'
 import { Chip, makeStyles } from '@material-ui/core'
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
   chip: props => ({
@@ -14,8 +15,14 @@ const useStyles = makeStyles(theme => ({
 
 const Tag = ({ text, size }) => {
   const classes = useStyles({ size })
+  const history = useHistory()
 
-  return <Chip label={text} className={classes.chip} />
+  const handleClick = e => {
+    history.push('/vote?search=' + text)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  return <Chip label={text} className={classes.chip} onClick={handleClick} />
 }
 
 Tag.propTypes = {}

@@ -11,7 +11,9 @@ import { DateTime } from 'luxon'
 import Tag from './Tag'
 import initialData from './data/votes_keywords_distributions.json'
 import PaginationControllers, { paginate } from './PaginationControllers'
-import { Typography } from '@material-ui/core'
+import { Typography, Button } from '@material-ui/core'
+import { fixJson } from './voteUtils'
+import VotesDialog from './VotesDialog'
 
 const useStyles = makeStyles(theme => {
   return {
@@ -32,13 +34,16 @@ const useStyles = makeStyles(theme => {
       color: theme.palette.text.primary,
       paddingLeft: '0.2rem',
       paddingRight: '0.2rem',
-      margin: '8px',
+      margin: theme.spacing(1),
     },
     content: {
       color: theme.palette.text.primary,
       paddingLeft: '0.2rem',
       paddingRight: '0.2rem',
-      margin: '8px !important',
+      margin: theme.spacing(1) + 'px !important',
+    },
+    contentButton: {
+      marginLeft: theme.spacing(1),
     },
   }
 })
@@ -78,6 +83,12 @@ const filterWithSearch = (data, searchFilter) => {
   })
 }
 
+const filterKeywordsWithSearch = (keywords, queryParams) => {
+  const searchParam = queryParams.get('search')
+  if (!searchParam || searchParam === '') return []
+  return keywords.filter(keyword => keyword.includes(searchParam))
+}
+
 const PerVoteTimeline = props => {
   const location = useLocation()
   const classes = useStyles()
@@ -87,67 +98,117 @@ const PerVoteTimeline = props => {
   ])
   const [page, setPage] = useState(0)
   const [perPage] = useState(10)
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [votesData, setVotesData] = useState([])
 
   useEffect(() => {
     setPage(0)
   }, [queryParams])
 
   return (
-    <VerticalTimeline
-      animate={true}
-      layout="1-column"
-      className={classes.timeline}
-    >
-      {paginate(data, page, perPage).map(item => (
-        <VerticalTimelineElement
-          key={item.id + '_' + item.vote_id}
-          className={classes.timelineelement}
-          contentStyle={timelineStyles.default.content}
-          contentArrowStyle={timelineStyles.default.arrow}
-          iconStyle={timelineStyles.alternative.icon}
-          position="right"
-        >
-          <h3 className={classes.time}>
-            {DateTime.fromSQL(item.date).toFormat('DDD')} ({item.hearing_stage})
-          </h3>
-
-          <Typography variant="h4" className={classes.title} gutterBottom>
-            {item.title}
-          </Typography>
-
-          <Typography
-            variant="body1"
-            component="h6"
-            className={classes.content}
-            gutterBottom
+    <React.Fragment>
+      <VerticalTimeline
+        animate={true}
+        layout="1-column"
+        className={classes.timeline}
+      >
+        {paginate(data, page, perPage).map(item => (
+          <VerticalTimelineElement
+            key={item.id + '_' + item.vote_id}
+            className={classes.timelineelement}
+            contentStyle={timelineStyles.default.content}
+            contentArrowStyle={timelineStyles.default.arrow}
+            iconStyle={timelineStyles.alternative.icon}
+            iconOnClick={() => setDialogOpen(true)}
+            position="right"
           >
-            {item.summary}
-          </Typography>
+            <h3 className={classes.time}>
+              {DateTime.fromSQL(item.date).toFormat('DDD')} (
+              {item.hearing_stage})
+            </h3>
 
-          {item.keywords_list.map((keyword, i) => (
-            <Tag
-              key={
-                DateTime.fromSQL(item.created).toISO() +
-                '_tag_' +
-                shortid.generate()
-              }
-              text={keyword}
-              size={item.keywords_list.length - i}
-            />
-          ))}
-          <br />
-        </VerticalTimelineElement>
-      ))}
-      <PaginationControllers
-        page={page}
-        setPage={setPage}
-        perPage={perPage}
-        dataSize={data.length}
+            <Typography
+              variant="h6"
+              component="h5"
+              className={classes.title}
+              gutterBottom
+            >
+              {item.id + ' - ' + item.title}
+            </Typography>
+
+            <Typography
+              variant="subtitle2"
+              component="h6"
+              className={classes.content}
+              display="inline"
+              gutterBottom
+            >
+              Search matches:
+            </Typography>
+
+            {filterKeywordsWithSearch(item.keywords_list, queryParams).map(
+              (keyword, i, array) => (
+                <Tag
+                  key={
+                    DateTime.fromSQL(item.created).toISO() +
+                    '_tag_' +
+                    shortid.generate()
+                  }
+                  text={keyword}
+                  size={1}
+                />
+              )
+            )}
+
+            <Typography
+              variant="body1"
+              component="h6"
+              className={classes.content}
+              gutterBottom
+            >
+              {item.summary}
+            </Typography>
+
+            <Button
+              variant="outlined"
+              color="primary"
+              className={classes.contentButton}
+              onClick={() => {
+                setVotesData(fixJson(item.distribution))
+                setDialogOpen(true)
+              }}
+            >
+              votes
+            </Button>
+
+            <br />
+          </VerticalTimelineElement>
+        ))}
+        <PaginationControllers
+          page={page}
+          setPage={setPage}
+          perPage={perPage}
+          dataSize={data.length}
+        />
+      </VerticalTimeline>
+      <VotesDialog
+        data={votesData}
+        dialogOpen={dialogOpen}
+        setDialogOpen={setDialogOpen}
       />
-    </VerticalTimeline>
+    </React.Fragment>
   )
 }
 
 PerVoteTimeline.propTypes = {}
 
 export default PerVoteTimeline
+
+/*<Typography
+              variant="body1"
+              component="h6"
+              className={classes.content}
+              gutterBottom
+            >
+              {JSON.stringify(getTotalDistribution(item.distribution))}
+            </Typography> */
