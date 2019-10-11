@@ -74,8 +74,9 @@ const ApplicationBar = props => {
   }
 
   const handleLogoClick = e => {
-    history.push('/year' + searchFilter)
+    history.replace('/year')
     window.scrollTo({ top: 0, behavior: 'smooth' })
+    setSearchFilter('')
   }
 
   return (

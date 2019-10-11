@@ -40,7 +40,14 @@ const VotesDialog = ({ data, dialogOpen, setDialogOpen }) => {
           Votes distribution
         </DialogTitle>
         <DialogContent dividers>
-          {data.map(vote => <VotesDialogContentCreator key={vote.session} data={vote.distribution} classes={classes} />)}
+          {data.map(vote =>
+            <VotesDialogContentCreator
+              key={vote.session}
+              data={vote.distribution}
+              annuled={vote.annulled}
+              classes={classes}
+            />
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setDialogOpen(false)} color="primary">

@@ -28,7 +28,7 @@ const voteTypes = {
     empty: 'tyhjä',
 }
 
-const VotesDialogContentCreator = ({ data, classes }) => {
+const VotesDialogContentCreator = ({ data, annulled, classes }) => {
     return (
         <div>
             <Grid container spacing={1}>
@@ -38,7 +38,7 @@ const VotesDialogContentCreator = ({ data, classes }) => {
                         className={classes.title}
                         gutterBottom
                     >
-                        Total
+                        {Number(annulled) === 1 ? <h3 style={{ color: 'red' }}>ANNULLED</h3> : <h3>Total</h3>}
               </Typography>
                     <VotesDialogRadialChart
                         data={data}
@@ -52,7 +52,7 @@ const VotesDialogContentCreator = ({ data, classes }) => {
                         className={classes.title}
                         gutterBottom
                     >
-                        Per party
+                        <h3>Per party</h3>
               </Typography>
                     <VotesDialogBarChart
                         data={data}
