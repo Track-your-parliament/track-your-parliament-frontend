@@ -59,13 +59,13 @@ const filterDataWithUrl = (data, queryParams) => {
     return filterWithSearch(data, searchParam)
   } else if (dateParam) {
     return data.filter(
-      item => DateTime.fromSQL(item.date).toISODate() === dateParam
+      item => DateTime.fromISO(item.date).toISODate() === dateParam
     )
   } else if (yearParam && monthParam) {
     return data.filter(
       item =>
-        DateTime.fromSQL(item.date).year === Number(yearParam) &&
-        DateTime.fromSQL(item.date).month === Number(monthParam)
+        DateTime.fromISO(item.date).year === Number(yearParam) &&
+        DateTime.fromISO(item.date).month === Number(monthParam)
     )
   }
   return data
@@ -127,7 +127,7 @@ const PerVoteTimeline = props => {
             position="right"
           >
             <h3 className={classes.time}>
-              {DateTime.fromSQL(item.date).toFormat('DDD')}
+              {DateTime.fromISO(item.date).toFormat('DDD')}
             </h3>
 
             <Typography

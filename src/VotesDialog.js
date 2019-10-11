@@ -20,20 +20,6 @@ const useStyles = makeStyles(theme => {
   }
 })
 
-const diagramColors = {
-  for: '#4caf50',
-  against: '#f44336',
-  away: '#ff9800',
-  empty: '#2196f3',
-}
-
-const voteTypes = {
-  for: 'jaa',
-  against: 'ei',
-  away: 'poissa',
-  empty: 'tyhjä',
-}
-
 const VotesDialog = ({ data, dialogOpen, setDialogOpen }) => {
   const classes = useStyles()
 
@@ -54,7 +40,7 @@ const VotesDialog = ({ data, dialogOpen, setDialogOpen }) => {
           Votes distribution
         </DialogTitle>
         <DialogContent dividers>
-          {data.map(vote => <VotesDialogContentCreator data={vote.distribution} classes={classes} />)}
+          {data.map(vote => <VotesDialogContentCreator key={vote.session} data={vote.distribution} classes={classes} />)}
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setDialogOpen(false)} color="primary">
