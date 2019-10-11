@@ -9,7 +9,8 @@ import { timelineStyles } from './theme'
 import shortid from 'shortid'
 import { DateTime } from 'luxon'
 import Tag from './Tag'
-import initialData from './data/votes_keywords_distributions.json'
+//import initialData from './data/votes_keywords_distributions.json'
+import initialData from './data/votes_with_sessions.json'
 import PaginationControllers, { paginate } from './PaginationControllers'
 import { Typography, Button } from '@material-ui/core'
 import { fixJson } from './voteUtils'
@@ -74,7 +75,7 @@ const filterWithSearch = (data, searchFilter) => {
   if (!searchFilter || searchFilter === '') return data
   return data.filter(item => {
     let found = false
-    item.keywords_list.forEach(obj => {
+    item.keyword_list.forEach(obj => {
       if (obj.includes(searchFilter)) {
         found = true
       }
@@ -119,12 +120,14 @@ const PerVoteTimeline = props => {
             contentStyle={timelineStyles.default.content}
             contentArrowStyle={timelineStyles.default.arrow}
             iconStyle={timelineStyles.alternative.icon}
-            iconOnClick={() => setDialogOpen(true)}
+            iconOnClick={() => {
+              setVotesData(fixJson(item.votes))
+              setDialogOpen(true)
+            }}
             position="right"
           >
             <h3 className={classes.time}>
-              {DateTime.fromSQL(item.date).toFormat('DDD')} (
-              {item.hearing_stage})
+              {DateTime.fromSQL(item.date).toFormat('DDD')}
             </h3>
 
             <Typography
@@ -146,7 +149,7 @@ const PerVoteTimeline = props => {
               Search matches:
             </Typography>
 
-            {filterKeywordsWithSearch(item.keywords_list, queryParams).map(
+            {filterKeywordsWithSearch(item.keyword_list, queryParams).map(
               (keyword, i, array) => (
                 <Tag
                   key={
@@ -174,7 +177,7 @@ const PerVoteTimeline = props => {
               color="primary"
               className={classes.contentButton}
               onClick={() => {
-                setVotesData(fixJson(item.distribution))
+                setVotesData(fixJson(item.votes))
                 setDialogOpen(true)
               }}
             >

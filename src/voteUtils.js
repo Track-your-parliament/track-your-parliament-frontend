@@ -1,11 +1,11 @@
-export const fixJson = text => {
+export const fixJson = votes => {
   const ignored_groups = ['Oppositioryhmät', 'Hallitusryhmät']
 
-  const jsonData = JSON.parse(text.replace(/'/g, '"')).distr
-
-  const votes_distribution = jsonData.filter(
-    vote => !ignored_groups.includes(vote.group)
-  )
+  const votes_distribution = votes.map(vote => {
+    const jsonData = JSON.parse(vote.distribution.replace(/'/g, '"'))
+    const filteredDist = jsonData.distr.filter(dist => !ignored_groups.includes(dist.group))
+    return {...vote, distribution: filteredDist}
+  })
 
   return votes_distribution
 }

@@ -10,9 +10,7 @@ import {
   makeStyles,
 } from '@material-ui/core'
 import 'react-vis/dist/style.css'
-import VotesDialogLegend from './VotesDialogLegend'
-import VotesDialogBarChart from './VotesDialogBarChart'
-import VotesDialogRadialChart from './VotesDialogRadialChart'
+import VotesDialogContentCreator from './VotesDialogContentCreator'
 
 const useStyles = makeStyles(theme => {
   return {
@@ -47,6 +45,7 @@ const VotesDialog = ({ data, dialogOpen, setDialogOpen }) => {
         open={dialogOpen}
         fullWidth={true}
         maxWidth={'lg'}
+        scroll={'paper'}
       >
         <DialogTitle
           id="customized-dialog-title"
@@ -55,40 +54,7 @@ const VotesDialog = ({ data, dialogOpen, setDialogOpen }) => {
           Votes distribution
         </DialogTitle>
         <DialogContent dividers>
-          <Grid container spacing={1}>
-            <Grid item xs={12} md={4}>
-              <Typography
-                variant="subtitle1"
-                className={classes.title}
-                gutterBottom
-              >
-                Total
-              </Typography>
-              <VotesDialogRadialChart
-                data={data}
-                voteTypes={voteTypes}
-                diagramColors={diagramColors}
-              />
-            </Grid>
-            <Grid item xs={12} md={8}>
-              <Typography
-                variant="subtitle1"
-                className={classes.title}
-                gutterBottom
-              >
-                Per party
-              </Typography>
-              <VotesDialogBarChart
-                data={data}
-                voteTypes={voteTypes}
-                diagramColors={diagramColors}
-              />
-            </Grid>
-            <VotesDialogLegend
-              voteTypes={voteTypes}
-              diagramColors={diagramColors}
-            />
-          </Grid>
+          {data.map(vote => <VotesDialogContentCreator data={vote.distribution} classes={classes} />)}
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setDialogOpen(false)} color="primary">
