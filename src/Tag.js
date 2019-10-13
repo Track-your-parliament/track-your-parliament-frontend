@@ -18,7 +18,7 @@ const Tag = ({ text, size }) => {
   const history = useHistory()
 
   const handleClick = e => {
-    history.push('/vote?search=' + text)
+    history.push('/proposal?search=' + text)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 

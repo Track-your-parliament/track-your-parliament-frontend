@@ -100,12 +100,11 @@ const PerVoteTimeline = props => {
   const [page, setPage] = useState(0)
   const [perPage] = useState(10)
   const [dialogOpen, setDialogOpen] = useState(false)
-  const [votesData, setVotesData] = useState([])
+  const [votesData, setVotesData] = useState({ decision: '', votes: [] })
 
   useEffect(() => {
     setPage(0)
   }, [queryParams])
-
   return (
     <React.Fragment>
       <VerticalTimeline
@@ -121,7 +120,10 @@ const PerVoteTimeline = props => {
             contentArrowStyle={timelineStyles.default.arrow}
             iconStyle={timelineStyles.alternative.icon}
             iconOnClick={() => {
-              setVotesData(fixJson(item.votes))
+              setVotesData({
+                decision: item.decision,
+                votes: fixJson(item.votes),
+              })
               setDialogOpen(true)
             }}
             position="right"
@@ -177,7 +179,10 @@ const PerVoteTimeline = props => {
               color="primary"
               className={classes.contentButton}
               onClick={() => {
-                setVotesData(fixJson(item.votes))
+                setVotesData({
+                  decision: item.decision,
+                  votes: fixJson(item.votes),
+                })
                 setDialogOpen(true)
               }}
             >

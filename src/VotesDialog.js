@@ -3,14 +3,15 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  Typography,
   DialogActions,
   Button,
-  Grid,
   makeStyles,
+  Typography,
 } from '@material-ui/core'
 import 'react-vis/dist/style.css'
 import VotesDialogContentCreator from './VotesDialogContentCreator'
+import VotesDialogLegend from './VotesDialogLegend'
+import shortid from 'shortid'
 
 const useStyles = makeStyles(theme => {
   return {
@@ -20,9 +21,22 @@ const useStyles = makeStyles(theme => {
   }
 })
 
+const diagramColors = {
+  for: '#4caf50',
+  against: '#f44336',
+  away: '#ff9800',
+  empty: '#2196f3',
+}
+
+const voteTypes = {
+  for: 'jaa',
+  against: 'ei',
+  away: 'poissa',
+  empty: 'tyhjä',
+}
+
 const VotesDialog = ({ data, dialogOpen, setDialogOpen }) => {
   const classes = useStyles()
-
   return (
     <div>
       <Dialog
@@ -40,14 +54,25 @@ const VotesDialog = ({ data, dialogOpen, setDialogOpen }) => {
           Votes distribution
         </DialogTitle>
         <DialogContent dividers>
-          {data.map(vote =>
+          <Typography variant="h5" gutterBottom>
+            {data.decision}
+          </Typography>
+          <br />
+          <br />
+          {data.votes.map(vote => (
             <VotesDialogContentCreator
-              key={vote.session}
+              key={vote.session + '_' + shortid.generate()}
+              voteTypes={voteTypes}
+              diagramColors={diagramColors}
               data={vote.distribution}
               annuled={vote.annulled}
               classes={classes}
             />
-          )}
+          ))}
+          <VotesDialogLegend
+            voteTypes={voteTypes}
+            diagramColors={diagramColors}
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setDialogOpen(false)} color="primary">

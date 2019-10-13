@@ -4,7 +4,8 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import SearchIcon from '@material-ui/icons/Search'
-import { InputBase, Button } from '@material-ui/core'
+import HelpIcon from '@material-ui/icons/Help'
+import { InputBase, Button, IconButton, Grow } from '@material-ui/core'
 import { useLocation, useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
@@ -53,9 +54,12 @@ const useStyles = makeStyles(theme => ({
       width: 200,
     },
   },
+  helpIcon: {
+    marginLeft: theme.spacing(1),
+  },
 }))
 
-const ApplicationBar = props => {
+const ApplicationBar = ({ handleInfoClick }) => {
   const classes = useStyles()
   const history = useHistory()
   const location = useLocation()
@@ -68,7 +72,7 @@ const ApplicationBar = props => {
 
   const handleSearchSubmit = e => {
     if (searchFilter.length >= 2) {
-      history.push('/vote?search=' + searchFilter)
+      history.push('/proposal?search=' + searchFilter)
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }
@@ -110,14 +114,22 @@ const ApplicationBar = props => {
               }}
             />
           </div>
-          <Button
-            variant="outlined"
+          <Grow in={searchFilter.length >= 2}>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleSearchSubmit}
+            >
+              Search
+            </Button>
+          </Grow>
+          <IconButton
             color="secondary"
-            disabled={searchFilter.length < 2}
-            onClick={handleSearchSubmit}
+            className={classes.helpIcon}
+            onClick={handleInfoClick}
           >
-            Search
-          </Button>
+            <HelpIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
       <Toolbar />

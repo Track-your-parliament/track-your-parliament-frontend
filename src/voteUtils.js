@@ -3,8 +3,10 @@ export const fixJson = votes => {
 
   const votes_distribution = votes.map(vote => {
     const jsonData = JSON.parse(vote.distribution.replace(/'/g, '"'))
-    const filteredDist = jsonData.distr.filter(dist => !ignored_groups.includes(dist.group))
-    return {...vote, distribution: filteredDist}
+    const filteredDist = jsonData.distr.filter(
+      dist => !ignored_groups.includes(dist.group)
+    )
+    return { ...vote, distribution: filteredDist }
   })
 
   return votes_distribution

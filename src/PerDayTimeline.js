@@ -56,7 +56,7 @@ const PerDayTimeline = params => {
   const [perPage] = useState(10)
 
   const iconClickHandler = date => {
-    history.push('/vote?date=' + date)
+    history.push('/proposal?date=' + date)
   }
 
   return (

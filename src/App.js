@@ -6,6 +6,7 @@ import NavigationBar from './NavigationBar.js'
 import { HashRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
 
 import 'react-vertical-timeline-component/style.min.css'
+import HelpDialog from './HelpDialog'
 
 const useStyles = makeStyles({
   root: {
@@ -33,12 +34,13 @@ const PerVoteTimeline = lazy(() => import('./PerVoteTimeline'))
 
 const App = () => {
   const [showLoading, setShowLoading] = useState(false)
+  const [dialogOpen, setDialogOpen] = useState(true)
   const classes = useStyles()
 
   return (
     <div className={classes.root}>
       <Router>
-        <ApplicationBar />
+        <ApplicationBar handleInfoClick={e => setDialogOpen(!dialogOpen)} />
 
         <Container className={classes.container} maxWidth={false}>
           <Suspense
@@ -55,7 +57,7 @@ const App = () => {
               <Route path="/day" component={PerDayTimeline} />
               <Route path="/month" component={PerMonthTimeline} />
               <Route path="/year" component={PerYearTimeline} />
-              <Route path="/vote" component={PerVoteTimeline} />
+              <Route path="/proposal" component={PerVoteTimeline} />
             </Switch>
           </Suspense>
         </Container>
@@ -65,6 +67,7 @@ const App = () => {
           showLoading={showLoading}
           setShowLoading={setShowLoading}
         />
+        <HelpDialog dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} />
       </Router>
     </div>
   )

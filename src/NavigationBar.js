@@ -23,7 +23,7 @@ const getButtonIndexFromLocation = location => {
       return 1
     case '/day':
       return 2
-    case '/vote':
+    case '/proposal':
       return 3
     default:
       return 0
@@ -70,10 +70,10 @@ const NavigationBar = ({ showLoading, setShowLoading }) => {
           to="/day"
         />
         <BottomNavigationAction
-          label="Per vote"
+          label="Per proposal"
           icon={<DescriptionIcon />}
           component={Link}
-          to="/vote"
+          to="/proposal"
         />
       </BottomNavigation>
     </Paper>
