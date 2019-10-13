@@ -27,7 +27,7 @@ const VotesDialogRadialChart = ({ data, diagramColors, voteTypes }) => {
       radius={140}
       padAngle={0.04}
       showLabels={true}
-      labelsRadiusMultiplier={1.2}
+      labelsRadiusMultiplier={1.1}
       labelsStyle={{ fontSize: 14 }}
     />
   )
