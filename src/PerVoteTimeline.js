@@ -141,15 +141,17 @@ const PerVoteTimeline = props => {
               {item.id + ' - ' + item.title}
             </Typography>
 
-            <Typography
-              variant="subtitle2"
-              component="h6"
-              className={classes.content}
-              display="inline"
-              gutterBottom
-            >
-              Search matches:
-            </Typography>
+            {data.length !== initialData.length && (
+              <Typography
+                variant="subtitle2"
+                component="h6"
+                className={classes.content}
+                display="inline"
+                gutterBottom
+              >
+                Search matches:
+              </Typography>
+            )}
 
             {filterKeywordsWithSearch(item.keyword_list, queryParams).map(
               (keyword, i, array) => (
