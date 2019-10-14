@@ -104,7 +104,7 @@ const PerVoteTimeline = props => {
 
   useEffect(() => {
     setPage(0)
-  }, [queryParams])
+  }, [data])
   return (
     <React.Fragment>
       <VerticalTimeline
