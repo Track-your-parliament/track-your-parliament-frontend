@@ -94,14 +94,22 @@ const filterWithSearch = (data, searchFilter) => {
         found = true
       }
     })
+    if (item.id.includes(searchFilter) || item.title.includes(searchFilter)) {
+      found = true
+    }
+
     return found
   })
 }
 
-const filterKeywordsWithSearch = (keywords, queryParams) => {
+const getSearchMatches = (keywords, id, queryParams) => {
   const searchParam = queryParams.get('search')
   if (!searchParam || searchParam === '') return []
-  return keywords.filter(keyword => keyword.includes(searchParam))
+  const matches = keywords.filter(keyword => keyword.includes(searchParam))
+  if (id.includes(searchParam)) {
+    matches.push(id)
+  }
+  return matches
 }
 
 const PerVoteTimeline = props => {
@@ -166,7 +174,8 @@ const PerVoteTimeline = props => {
                 {item.id + ' - ' + item.title}
               </Typography>
 
-              {queryParams.get('search') && (
+              {getSearchMatches(item.keyword_list, item.id, queryParams)
+                .length !== 0 && (
                 <Typography
                   variant="subtitle2"
                   component="h6"
@@ -178,7 +187,7 @@ const PerVoteTimeline = props => {
                 </Typography>
               )}
 
-              {filterKeywordsWithSearch(item.keyword_list, queryParams).map(
+              {getSearchMatches(item.keyword_list, item.id, queryParams).map(
                 (keyword, i, array) => (
                   <Tag
                     key={
