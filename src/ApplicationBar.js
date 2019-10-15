@@ -71,7 +71,7 @@ const ApplicationBar = ({ handleInfoClick }) => {
   const handleSearchChange = e => setSearchFilter(e.target.value)
 
   const handleSearchSubmit = e => {
-    if (searchFilter.length >= 2) {
+    if (searchFilter.length >= 3) {
       history.push('/proposal?search=' + searchFilter)
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }
@@ -114,7 +114,7 @@ const ApplicationBar = ({ handleInfoClick }) => {
               }}
             />
           </div>
-          <Grow in={searchFilter.length >= 2}>
+          <Grow in={searchFilter.length >= 3}>
             <Button
               variant="contained"
               color="secondary"

@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import {
@@ -15,7 +15,7 @@ import PaginationControllers, { paginate } from './PaginationControllers'
 import { Typography, Button } from '@material-ui/core'
 import { fixJson } from './voteUtils'
 import VotesDialog from './VotesDialog'
-import { Icon, Label } from 'semantic-ui-react'
+import { Icon } from 'semantic-ui-react'
 
 const useStyles = makeStyles(theme => {
   return {
@@ -46,6 +46,9 @@ const useStyles = makeStyles(theme => {
     },
     contentButton: {
       marginLeft: theme.spacing(1),
+    },
+    proposalLink: {
+      lineHeight: 1,
     },
   }
 })
@@ -91,14 +94,26 @@ const filterWithSearch = (data, searchFilter) => {
         found = true
       }
     })
+    if (
+      item.id.includes(searchFilter) ||
+      item.title.includes(searchFilter) ||
+      item.summary.includes(searchFilter)
+    ) {
+      found = true
+    }
+
     return found
   })
 }
 
-const filterKeywordsWithSearch = (keywords, queryParams) => {
+const getSearchMatches = (keywords, id, queryParams) => {
   const searchParam = queryParams.get('search')
   if (!searchParam || searchParam === '') return []
-  return keywords.filter(keyword => keyword.includes(searchParam))
+  const matches = keywords.filter(keyword => keyword.includes(searchParam))
+  if (id.includes(searchParam)) {
+    matches.push(id)
+  }
+  return matches
 }
 
 const PerVoteTimeline = props => {
@@ -113,9 +128,6 @@ const PerVoteTimeline = props => {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [votesData, setVotesData] = useState({ decision: '', votes: [] })
 
-  useEffect(() => {
-    setPage(0)
-  }, [data])
   return (
     <React.Fragment>
       <VerticalTimeline
@@ -161,12 +173,10 @@ const PerVoteTimeline = props => {
                 gutterBottom
               >
                 {item.id + ' - ' + item.title}
-                <Label as="a" href={getLink(item.id)} target="_blank" basic>
-                  <Icon name="external alternate" /> View proposal
-                </Label>
               </Typography>
 
-              {queryParams.get('search') && (
+              {getSearchMatches(item.keyword_list, item.id, queryParams)
+                .length !== 0 && (
                 <Typography
                   variant="subtitle2"
                   component="h6"
@@ -178,7 +188,7 @@ const PerVoteTimeline = props => {
                 </Typography>
               )}
 
-              {filterKeywordsWithSearch(item.keyword_list, queryParams).map(
+              {getSearchMatches(item.keyword_list, item.id, queryParams).map(
                 (keyword, i, array) => (
                   <Tag
                     key={
@@ -214,6 +224,20 @@ const PerVoteTimeline = props => {
                 }}
               >
                 votes
+              </Button>
+              <Button
+                variant="outlined"
+                color="primary"
+                as="a"
+                target="_blank"
+                href={getLink(item.id)}
+                className={classes.contentButton}
+              >
+                <Icon
+                  className={classes.proposalLink}
+                  name="external alternate"
+                />
+                View proposal
               </Button>
 
               <br />

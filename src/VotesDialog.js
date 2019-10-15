@@ -22,17 +22,17 @@ const useStyles = makeStyles(theme => {
 })
 
 const diagramColors = {
-  for: '#4caf50',
-  against: '#f44336',
-  away: '#ff9800',
-  empty: '#2196f3',
+  for: '#145ba3',
+  against: '#b354aa',
+  away: '#ff5c6e',
+  empty: '#ffa600',
 }
 
 const voteTypes = {
-  for: 'jaa',
-  against: 'ei',
-  away: 'poissa',
-  empty: 'tyhjä',
+  for: 'jaa (yes)',
+  against: 'ei (no)',
+  away: 'poissa (away)',
+  empty: 'tyhjiä (empty)',
 }
 
 const VotesDialog = ({ data, dialogOpen, setDialogOpen }) => {
@@ -69,12 +69,12 @@ const VotesDialog = ({ data, dialogOpen, setDialogOpen }) => {
               classes={classes}
             />
           ))}
+        </DialogContent>
+        <DialogActions>
           <VotesDialogLegend
             voteTypes={voteTypes}
             diagramColors={diagramColors}
           />
-        </DialogContent>
-        <DialogActions>
           <Button onClick={() => setDialogOpen(false)} color="primary">
             Hide
           </Button>

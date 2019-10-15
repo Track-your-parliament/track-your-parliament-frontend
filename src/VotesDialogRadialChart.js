@@ -22,12 +22,12 @@ const VotesDialogRadialChart = ({ data, diagramColors, voteTypes }) => {
       )}
       width={320}
       height={300}
-      margin={{ left: 20, right: 20, top: 10, bottom: 10 }}
-      innerRadius={90}
-      radius={140}
+      margin={{ left: 30, right: 30, top: 20, bottom: 20 }}
+      innerRadius={80}
+      radius={130}
       padAngle={0.04}
       showLabels={true}
-      labelsRadiusMultiplier={1.1}
+      labelsRadiusMultiplier={1.2}
       labelsStyle={{ fontSize: 14 }}
     />
   )
