@@ -94,7 +94,11 @@ const filterWithSearch = (data, searchFilter) => {
         found = true
       }
     })
-    if (item.id.includes(searchFilter) || item.title.includes(searchFilter)) {
+    if (
+      item.id.includes(searchFilter) ||
+      item.title.includes(searchFilter) ||
+      item.summary.includes(searchFilter)
+    ) {
       found = true
     }
 
