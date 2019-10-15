@@ -9,3 +9,12 @@ body {
 .vertical-timeline-element-content h2 {
   font-size: inherit !important;
 }
+
+.disclaimer_icon {
+  float: left;
+  margin-right: 10px;
+}
+
+.disclaimer_content {
+  display: content;
+}

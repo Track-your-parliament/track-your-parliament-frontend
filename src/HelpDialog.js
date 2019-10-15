@@ -7,6 +7,7 @@ import {
   Button,
   Typography,
 } from '@material-ui/core'
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline'
 import votesButtonImage from './data/votesButton.png'
 import zoomButtonImage from './data/zoomButton.png'
 import tagImage from './data/tag.png'
@@ -48,16 +49,6 @@ const HelpDialog = ({ dialogOpen, setDialogOpen }) => {
           <br />
           <br />
 
-          <Typography variant="h5">Using keywords</Typography>
-          <Typography variant="body1">
-            When you find an interesting keyword in any of the views, by
-            clicking it the application shows all the proposals which are
-            relevant to that keyword.
-          </Typography>
-          <img src={tagImage} alt="keyword" width={100} />
-          <br />
-          <br />
-
           <Typography variant="h5">View the voting data</Typography>
           <Typography variant="body1">
             When you find a proposal that you are interested in, you can press
@@ -77,30 +68,39 @@ const HelpDialog = ({ dialogOpen, setDialogOpen }) => {
           </Typography>
           <img src={votesImage} alt="search" width={600} />
           <br />
+          <ErrorOutlineIcon color="error" className="disclaimer_icon" />
+          <div className="disclaimer_content">
+            <Typography display="inline" variant="body2">
+              One proposal may contain more than one vote due to the nature of
+              the Finnish law making process. However, detailed information on
+              the specifics of each vote is not available in the used data
+              sources.
+            </Typography>
+          </div>
           <br />
 
           <Typography variant="h5" gutterBottom>
-            Using search bar
+            Using the search bar
           </Typography>
           <Typography variant="body1">
             You can use the search functionality located on the top right corner
             of the application to find individual proposals which contain the
             keyword you are interested. The minimum keyword length to be
-            searched is two letters. The results are shown also on a timeline
-            format. Clicking on any keyword on the page will also trigger a
-            search for that keyword.
+            searched is three letters. The results are shown also on a timeline
+            format.
           </Typography>
           <img src={searchImage} alt="search" width={280} />
-          <br />
-          <br />
-
-          <Typography variant="h5" gutterBottom>
-            Disclaimers
+          <Typography variant="body1">
+            Clicking on any keyword on the page will also trigger a search for
+            that keyword.
           </Typography>
-          <Typography variant="body1"></Typography>
-          <img src={searchImage} alt="search" width={280} />
+          <img src={tagImage} alt="tag" width={100} />
           <br />
           <br />
+          <Typography variant="subtitle2" gutterBottom>
+            Source of data used in the application:
+            https://avoindata.eduskunta.fi/
+          </Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setDialogOpen(false)} color="primary">
