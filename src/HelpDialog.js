@@ -61,8 +61,9 @@ const HelpDialog = ({ dialogOpen, setDialogOpen }) => {
           <Typography variant="h5">View the voting data</Typography>
           <Typography variant="body1">
             When you find a proposal that you are interested in, you can press
-            the "VOTES" button underneath the summary to open a window
-            showcasing the voting data of that proposal.
+            the "VOTES" button underneath the summary, or click the bullet next
+            to the proposal, to open a window showcasing the voting data of that
+            proposal.
           </Typography>
           <img src={votesButtonImage} alt="votes button" width={80} />
 
@@ -70,8 +71,9 @@ const HelpDialog = ({ dialogOpen, setDialogOpen }) => {
             Opening the votes window shows all the voting data available for
             individual proposal. For each vote there are two graphs shown. The
             first graph shows the total distribution of votes between the vote
-            options (JAA, EI, TYHJIÄ and POISSA), and the second graph shows the
-            distribution inside every party.
+            options (JAA, EI, TYHJÄ and POISSA), and the second graph shows the
+            distribution inside every party. Hovering over the charts displays
+            details of the chart in a tooltip.
           </Typography>
           <img src={votesImage} alt="search" width={600} />
           <br />
@@ -85,8 +87,17 @@ const HelpDialog = ({ dialogOpen, setDialogOpen }) => {
             of the application to find individual proposals which contain the
             keyword you are interested. The minimum keyword length to be
             searched is two letters. The results are shown also on a timeline
-            format.
+            format. Clicking on any keyword on the page will also trigger a
+            search for that keyword.
           </Typography>
+          <img src={searchImage} alt="search" width={280} />
+          <br />
+          <br />
+
+          <Typography variant="h5" gutterBottom>
+            Disclaimers
+          </Typography>
+          <Typography variant="body1"></Typography>
           <img src={searchImage} alt="search" width={280} />
           <br />
           <br />

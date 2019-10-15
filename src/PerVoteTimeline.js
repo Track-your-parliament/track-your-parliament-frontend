@@ -166,7 +166,7 @@ const PerVoteTimeline = props => {
                 {item.id + ' - ' + item.title}
               </Typography>
 
-              {data.length !== initialData.length && (
+              {queryParams.get('search') && (
                 <Typography
                   variant="subtitle2"
                   component="h6"
