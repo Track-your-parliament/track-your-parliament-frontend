@@ -4,9 +4,7 @@ import { makeStyles } from '@material-ui/styles'
 
 const useStyles = makeStyles(theme => {
   return {
-    legendWrapper: {
-      marginTop: theme.spacing(2),
-    },
+    legendWrapper: {},
     legendItem: {
       display: 'flex',
       alignItems: 'center',

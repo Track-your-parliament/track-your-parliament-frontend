@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import {
@@ -128,9 +128,6 @@ const PerVoteTimeline = props => {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [votesData, setVotesData] = useState({ decision: '', votes: [] })
 
-  useEffect(() => {
-    setPage(0)
-  }, [data])
   return (
     <React.Fragment>
       <VerticalTimeline
