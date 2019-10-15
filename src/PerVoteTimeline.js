@@ -54,7 +54,7 @@ const getLink = id => {
   const baseLink = 'https://www.eduskunta.fi/FI/vaski/KasittelytiedotValtiopaivaasia/Sivut/'
   var typeAndNumber = id.split(' ')
   var sessionAndYear = typeAndNumber[1].split('/')
-  return `${baseLink}${typeAndNumber[0]}_${sessionAndYear[0]}+${sessionAndYear[1]}.aspx` 
+  return `${baseLink}${typeAndNumber[0]}_${sessionAndYear[0]}+${sessionAndYear[1]}.aspx`
 }
 
 const filterDataWithUrl = (data, queryParams) => {
@@ -120,91 +120,102 @@ const PerVoteTimeline = props => {
         layout="1-column"
         className={classes.timeline}
       >
-        {paginate(data, page, perPage).map(item => (
-          <VerticalTimelineElement
-            key={item.id + '_' + item.vote_id}
+        {data.length === 0
+          ? <VerticalTimelineElement
             className={classes.timelineelement}
             contentStyle={timelineStyles.default.content}
             contentArrowStyle={timelineStyles.default.arrow}
             iconStyle={timelineStyles.alternative.icon}
-            iconOnClick={() => {
-              setVotesData({
-                decision: item.decision,
-                votes: fixJson(item.votes),
-              })
-              setDialogOpen(true)
-            }}
-            position="right"
-          >
+            position="right">
             <h3 className={classes.time}>
-              {DateTime.fromISO(item.date).toFormat('DDD')}
+              No matches found.
             </h3>
-
-            <Typography
-              variant="h6"
-              component="h5"
-              className={classes.title}
-              gutterBottom
-            >
-              {item.id + ' - ' + item.title}
-              <Label as='a' href={getLink(item.id)} target='_blank' basic>
-                <Icon name='external alternate' /> View proposal
-              </Label>
-            </Typography>
-
-            {data.length !== initialData.length && (
-              <Typography
-                variant="subtitle2"
-                component="h6"
-                className={classes.content}
-                display="inline"
-                gutterBottom
-              >
-                Search matches:
-              </Typography>
-            )}
-
-            {filterKeywordsWithSearch(item.keyword_list, queryParams).map(
-              (keyword, i, array) => (
-                <Tag
-                  key={
-                    DateTime.fromSQL(item.created).toISO() +
-                    '_tag_' +
-                    shortid.generate()
-                  }
-                  text={keyword}
-                  size={1}
-                />
-              )
-            )}
-
-            <Typography
-              variant="body1"
-              component="h6"
-              className={classes.content}
-              gutterBottom
-            >
-              {item.summary}
-            </Typography>
-
-            <Button
-              variant="outlined"
-              color="primary"
-              className={classes.contentButton}
-              onClick={() => {
+          </VerticalTimelineElement>
+          : paginate(data, page, perPage).map(item => (
+            <VerticalTimelineElement
+              key={item.id + '_' + item.vote_id}
+              className={classes.timelineelement}
+              contentStyle={timelineStyles.default.content}
+              contentArrowStyle={timelineStyles.default.arrow}
+              iconStyle={timelineStyles.alternative.icon}
+              iconOnClick={() => {
                 setVotesData({
                   decision: item.decision,
                   votes: fixJson(item.votes),
                 })
                 setDialogOpen(true)
               }}
+              position="right"
             >
-              votes
+              <h3 className={classes.time}>
+                {DateTime.fromISO(item.date).toFormat('DDD')}
+              </h3>
+
+              <Typography
+                variant="h6"
+                component="h5"
+                className={classes.title}
+                gutterBottom
+              >
+                {item.id + ' - ' + item.title}
+                <Label as='a' href={getLink(item.id)} target='_blank' basic>
+                  <Icon name='external alternate' /> View proposal
+              </Label>
+              </Typography>
+
+              {data.length !== initialData.length && (
+                <Typography
+                  variant="subtitle2"
+                  component="h6"
+                  className={classes.content}
+                  display="inline"
+                  gutterBottom
+                >
+                  Search matches:
+              </Typography>
+              )}
+
+              {filterKeywordsWithSearch(item.keyword_list, queryParams).map(
+                (keyword, i, array) => (
+                  <Tag
+                    key={
+                      DateTime.fromSQL(item.created).toISO() +
+                      '_tag_' +
+                      shortid.generate()
+                    }
+                    text={keyword}
+                    size={1}
+                  />
+                )
+              )}
+
+              <Typography
+                variant="body1"
+                component="h6"
+                className={classes.content}
+                gutterBottom
+              >
+                {item.summary}
+              </Typography>
+
+              <Button
+                variant="outlined"
+                color="primary"
+                className={classes.contentButton}
+                onClick={() => {
+                  setVotesData({
+                    decision: item.decision,
+                    votes: fixJson(item.votes),
+                  })
+                  setDialogOpen(true)
+                }}
+              >
+                votes
             </Button>
 
-            <br />
-          </VerticalTimelineElement>
-        ))}
+              <br />
+            </VerticalTimelineElement>
+          ))}
         <PaginationControllers
           page={page}
           setPage={setPage}
