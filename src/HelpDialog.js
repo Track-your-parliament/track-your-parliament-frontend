@@ -36,7 +36,7 @@ const HelpDialog = ({ dialogOpen, setDialogOpen }) => {
             The application is based on views summarizing the relevant keywords
             in parliament during a certain period of time in timeline format.
             When the application is first opened the "Per year" view is showed
-            initially. Clicking the blue button next to the year allows you to
+            initially. By clicking the blue button (shown below) next to the year allows you to
             dig into that year in more detail and show the summary of keywords
             on monthly basis. This same logic applies on monthly view where
             clicking the blue button shows the summary of keywords on daily
@@ -49,8 +49,8 @@ const HelpDialog = ({ dialogOpen, setDialogOpen }) => {
 
           <Typography variant="h5">Using keywords</Typography>
           <Typography variant="body1">
-            When you find an interesting keyword in any view, you can click it
-            and all the proposals which are relevant to that keyword are shown.
+            When you find an interesting keyword in any of the views, by clicking it the
+            application shows all the proposals which are relevant to that keyword.
           </Typography>
           <img src={tagImage} alt="keyword" width={100} />
           <br />
@@ -68,7 +68,7 @@ const HelpDialog = ({ dialogOpen, setDialogOpen }) => {
             Opening the votes window shows all the voting data available for
             individual proposal. For each vote there are two graphs shown. The
             first graph shows the total distribution of votes between the vote
-            options (JAA, EI, TYHJÄ and POISSA), and the second graph shows the
+            options (JAA, EI, TYHJIÄ and POISSA), and the second graph shows the
             distribution inside every party.
           </Typography>
           <img src={votesImage} alt="search" width={600} />
@@ -76,7 +76,7 @@ const HelpDialog = ({ dialogOpen, setDialogOpen }) => {
           <br />
 
           <Typography variant="h5" gutterBottom>
-            Using the serach
+            Using search bar
           </Typography>
           <Typography variant="body1">
             You can use the search functionality located on the top right corner

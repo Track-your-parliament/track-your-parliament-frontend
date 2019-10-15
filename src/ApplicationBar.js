@@ -92,7 +92,7 @@ const ApplicationBar = ({ handleInfoClick }) => {
             className={classes.title}
             onClick={handleLogoClick}
           >
-            Track-your-parliament
+            Track Your Parliament
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
