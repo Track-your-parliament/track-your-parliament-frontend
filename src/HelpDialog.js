@@ -36,12 +36,13 @@ const HelpDialog = ({ dialogOpen, setDialogOpen }) => {
             The application is based on views summarizing the relevant keywords
             in parliament during a certain period of time in timeline format.
             When the application is first opened the "Per year" view is showed
-            initially. By clicking the blue button (shown below) next to the year allows you to
-            dig into that year in more detail and show the summary of keywords
-            on monthly basis. This same logic applies on monthly view where
-            clicking the blue button shows the summary of keywords on daily
-            basis. When you are browsing the daily view, clicking the blue
-            button allows you the see the individual proposals on that day.
+            initially. By clicking the blue button (shown below) next to the
+            year allows you to dig into that year in more detail and show the
+            summary of keywords on monthly basis. This same logic applies on
+            monthly view where clicking the blue button shows the summary of
+            keywords on daily basis. When you are browsing the daily view,
+            clicking the blue button allows you the see the individual proposals
+            on that day.
           </Typography>
           <img src={zoomButtonImage} alt="zoom button" width={50} />
           <br />
@@ -49,8 +50,9 @@ const HelpDialog = ({ dialogOpen, setDialogOpen }) => {
 
           <Typography variant="h5">Using keywords</Typography>
           <Typography variant="body1">
-            When you find an interesting keyword in any of the views, by clicking it the
-            application shows all the proposals which are relevant to that keyword.
+            When you find an interesting keyword in any of the views, by
+            clicking it the application shows all the proposals which are
+            relevant to that keyword.
           </Typography>
           <img src={tagImage} alt="keyword" width={100} />
           <br />

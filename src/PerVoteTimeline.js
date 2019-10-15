@@ -15,7 +15,7 @@ import PaginationControllers, { paginate } from './PaginationControllers'
 import { Typography, Button } from '@material-ui/core'
 import { fixJson } from './voteUtils'
 import VotesDialog from './VotesDialog'
-import { Icon, Label } from 'semantic-ui-react'
+import { Icon } from 'semantic-ui-react'
 
 const useStyles = makeStyles(theme => {
   return {
@@ -47,14 +47,20 @@ const useStyles = makeStyles(theme => {
     contentButton: {
       marginLeft: theme.spacing(1),
     },
+    proposalLink: {
+      lineHeight: 1,
+    },
   }
 })
 
 const getLink = id => {
-  const baseLink = 'https://www.eduskunta.fi/FI/vaski/KasittelytiedotValtiopaivaasia/Sivut/'
+  const baseLink =
+    'https://www.eduskunta.fi/FI/vaski/KasittelytiedotValtiopaivaasia/Sivut/'
   var typeAndNumber = id.split(' ')
   var sessionAndYear = typeAndNumber[1].split('/')
-  return `${baseLink}${typeAndNumber[0]}_${sessionAndYear[0]}+${sessionAndYear[1]}.aspx`
+  return `${baseLink}${typeAndNumber[0]}_${sessionAndYear[0]}+${
+    sessionAndYear[1]
+  }.aspx`
 }
 
 const filterDataWithUrl = (data, queryParams) => {
@@ -120,18 +126,18 @@ const PerVoteTimeline = props => {
         layout="1-column"
         className={classes.timeline}
       >
-        {data.length === 0
-          ? <VerticalTimelineElement
+        {data.length === 0 ? (
+          <VerticalTimelineElement
             className={classes.timelineelement}
             contentStyle={timelineStyles.default.content}
             contentArrowStyle={timelineStyles.default.arrow}
             iconStyle={timelineStyles.alternative.icon}
-            position="right">
-            <h3 className={classes.time}>
-              No matches found.
-            </h3>
+            position="right"
+          >
+            <h3 className={classes.time}>No matches found.</h3>
           </VerticalTimelineElement>
-          : paginate(data, page, perPage).map(item => (
+        ) : (
+          paginate(data, page, perPage).map(item => (
             <VerticalTimelineElement
               key={item.id + '_' + item.vote_id}
               className={classes.timelineelement}
@@ -158,9 +164,6 @@ const PerVoteTimeline = props => {
                 gutterBottom
               >
                 {item.id + ' - ' + item.title}
-                <Label as='a' href={getLink(item.id)} target='_blank' basic>
-                  <Icon name='external alternate' /> View proposal
-              </Label>
               </Typography>
 
               {data.length !== initialData.length && (
@@ -172,7 +175,7 @@ const PerVoteTimeline = props => {
                   gutterBottom
                 >
                   Search matches:
-              </Typography>
+                </Typography>
               )}
 
               {filterKeywordsWithSearch(item.keyword_list, queryParams).map(
@@ -211,11 +214,26 @@ const PerVoteTimeline = props => {
                 }}
               >
                 votes
-            </Button>
+              </Button>
+              <Button
+                variant="outlined"
+                color="primary"
+                as="a"
+                target="_blank"
+                href={getLink(item.id)}
+                className={classes.contentButton}
+              >
+                <Icon
+                  className={classes.proposalLink}
+                  name="external alternate"
+                />
+                View proposal
+              </Button>
 
               <br />
             </VerticalTimelineElement>
-          ))}
+          ))
+        )}
         <PaginationControllers
           page={page}
           setPage={setPage}
