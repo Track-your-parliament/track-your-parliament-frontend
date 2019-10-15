@@ -147,7 +147,7 @@ const PerVoteTimeline = props => {
               gutterBottom
             >
               {item.id + ' - ' + item.title}
-              <Label as='a' href={getLink(item.id)} basic>
+              <Label as='a' href={getLink(item.id)} target='_blank' basic>
                 <Icon name='external alternate' /> View proposal
               </Label>
             </Typography>
