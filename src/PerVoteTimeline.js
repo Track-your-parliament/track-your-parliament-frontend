@@ -15,6 +15,7 @@ import PaginationControllers, { paginate } from './PaginationControllers'
 import { Typography, Button } from '@material-ui/core'
 import { fixJson } from './voteUtils'
 import VotesDialog from './VotesDialog'
+import { Icon, Label } from 'semantic-ui-react'
 
 const useStyles = makeStyles(theme => {
   return {
@@ -48,6 +49,13 @@ const useStyles = makeStyles(theme => {
     },
   }
 })
+
+const getLink = id => {
+  const baseLink = 'https://www.eduskunta.fi/FI/vaski/KasittelytiedotValtiopaivaasia/Sivut/'
+  var typeAndNumber = id.split(' ')
+  var sessionAndYear = typeAndNumber[1].split('/')
+  return `${baseLink}${typeAndNumber[0]}_${sessionAndYear[0]}+${sessionAndYear[1]}.aspx` 
+}
 
 const filterDataWithUrl = (data, queryParams) => {
   const dateParam = queryParams.get('date')
@@ -139,6 +147,9 @@ const PerVoteTimeline = props => {
               gutterBottom
             >
               {item.id + ' - ' + item.title}
+              <Label as='a' href={getLink(item.id)} basic>
+                <Icon name='external alternate' /> View proposal
+              </Label>
             </Typography>
 
             {data.length !== initialData.length && (

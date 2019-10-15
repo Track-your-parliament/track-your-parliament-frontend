@@ -56,7 +56,7 @@ const HelpDialog = ({ dialogOpen, setDialogOpen }) => {
           <br />
           <br />
 
-          <Typography variant="h5">Seeing the voting data</Typography>
+          <Typography variant="h5">View the voting data</Typography>
           <Typography variant="body1">
             When you find a proposal that you are interested in, you can press
             the "VOTES" button underneath the summary to open a window
